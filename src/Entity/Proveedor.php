@@ -1,56 +1,44 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\ProveedorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ProveedorRepository::class)
- */
+#[ORM\Entity(repositoryClass: ProveedorRepository::class)]
+#[ORM\Table(name: 'proveedor')]
 class Proveedor
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nombre;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $nombre = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $telefono;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $telefono = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $tipo;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $tipo = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $activo;
+    #[ORM\Column(type: 'boolean')]
+    private bool $activo = true;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime')]
+    private \DateTimeInterface $created_at;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
+    #[ORM\Column(type: 'datetime')]
+    private \DateTimeInterface $updated_at;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -65,7 +53,6 @@ class Proveedor
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
@@ -77,7 +64,6 @@ class Proveedor
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -86,10 +72,9 @@ class Proveedor
         return $this->telefono;
     }
 
-    public function setTelefono(string $telefono): self
+    public function setTelefono(?string $telefono): self
     {
         $this->telefono = $telefono;
-
         return $this;
     }
 
@@ -101,11 +86,10 @@ class Proveedor
     public function setTipo(string $tipo): self
     {
         $this->tipo = $tipo;
-
         return $this;
     }
 
-    public function getActivo(): ?bool
+    public function isActivo(): bool
     {
         return $this->activo;
     }
@@ -113,31 +97,35 @@ class Proveedor
     public function setActivo(bool $activo): self
     {
         $this->activo = $activo;
-
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
-
+        $this->created_at = $createdAt;
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): \DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->updated_at;
     }
 
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
-
+        $this->updated_at = $updatedAt;
         return $this;
     }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updated_at = new \DateTime();
+    }
 }
+

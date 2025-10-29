@@ -47,6 +47,14 @@ class ProveedorRepository extends ServiceEntityRepository
         }
     }
 
+     public function findAllOrderedByName()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.nombre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Proveedor[] Returns an array of Proveedor objects
     //  */

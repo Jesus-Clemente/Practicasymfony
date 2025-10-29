@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProveedorRepository::class)]
 #[ORM\Table(name: 'proveedor')]
+#[ORM\HasLifecycleCallbacks]
 class Proveedor
 {
     #[ORM\Id]

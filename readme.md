@@ -88,7 +88,7 @@ php bin/console doctrine:database:create
 5. **Crear las tablas:**
 
 ```bash
-php bin/console doctrine:schema:update --force
+php bin/console doctrine:migrations:migrate
 ```
 
 ---

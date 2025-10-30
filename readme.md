@@ -75,7 +75,10 @@ Edita el archivo `.env` y configura la conexión:
 ```dotenv
 DATABASE_URL=mysql://usuario:contraseña@127.0.0.1:3306/nombre_base_datos
 ```
-
+En mi caso en el archvio `.env` la configuracion de la conexión es la siguiente:
+```dotenv
+DATABASE_URL=mysql://root:root@127.0.0.1:3306/proveedor_app
+```
 4. **Crear la base de datos:**
 
 ```bash

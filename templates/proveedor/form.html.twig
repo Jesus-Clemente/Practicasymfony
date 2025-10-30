@@ -1,10 +1,113 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}{{ title }}{% endblock %}
+
 {% block body %}
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f8f9fa;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .form-row {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+    text-decoration: none;
+    color: white;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+   h1{
+      color: #333;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+</style>
+
 <h1>{{ title }}</h1>
+
 {{ form_start(form) }}
-  {{ form_widget(form) }}
-  <button class="btn btn-success mt-3">Guardar</button>
-  <a href="{{ path('proveedor_index') }}" class="btn btn-secondary mt-3">Volver</a>
+
+  {# Cada campo envuelto en un div con clase form-row para espaciado #}
+  {% for field in form %}
+    <div class="form-row">
+      {{ form_label(field) }}
+      {{ form_widget(field) }}
+      {{ form_errors(field) }}
+    </div>
+  {% endfor %}
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a href="{{ path('proveedor_index') }}" class="btn btn-secondary">Volver</a>
+  </div>
+
 {{ form_end(form) }}
 {% endblock %}

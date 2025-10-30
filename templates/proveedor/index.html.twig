@@ -3,11 +3,139 @@
 {% block title %}Proveedores{% endblock %}
 
 {% block body %}
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f8f9fa;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+
+  a.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+  }
+
+  a.btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* separación entre filas */
+  }
+
+  thead {
+    background-color: #e9ecef;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px 18px;
+  }
+
+  th {
+    color: #555;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  tbody tr {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-radius: 8px;
+  }
+
+  tbody tr:hover {
+    background-color: #f1f7ff;
+    transition: background-color 0.2s;
+  }
+
+  td {
+    vertical-align: middle;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  th:last-child {
+    text-align: center;
+  }
+
+  .acciones {
+    display: flex;            
+    justify-content: center;  
+    align-items: center;      
+    gap: 6px;                 
+  }
+
+  .btn-edit, .btn-delete {
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .btn-edit {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-edit:hover {
+    background-color: #555;
+  }
+
+  .btn-delete {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-delete:hover {
+    background-color: #b02a37;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .badge-activo {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .badge-inactivo {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .sin-proveedores {
+    text-align: center;
+    color: #777;
+    padding: 20px 0;
+    font-style: italic;
+  }
+</style>
+
 <h1>Listado de Proveedores</h1>
 
-<a href="{{ path('proveedor_new') }}" class="btn btn-primary">Nuevo proveedor</a>
+<a href="{{ path('proveedor_new') }}" class="btn-primary">Nuevo proveedor</a>
 
-<table class="table mt-3">
+<table>
   <thead>
     <tr>
       <th>Nombre</th>
@@ -15,6 +143,8 @@
       <th>Teléfono</th>
       <th>Tipo</th>
       <th>Activo</th>
+      <th>Creado</th>
+      <th>Actualizado</th>
       <th>Acciones</th>
     </tr>
   </thead>
@@ -25,17 +155,29 @@
       <td>{{ proveedor.email }}</td>
       <td>{{ proveedor.telefono }}</td>
       <td>{{ proveedor.tipo }}</td>
-      <td>{{ proveedor.activo ? 'Sí' : 'No' }}</td>
       <td>
-        <a href="{{ path('proveedor_edit', {id: proveedor.id}) }}" class="btn btn-sm btn-secondary">Editar</a>
-        <form method="post" action="{{ path('proveedor_delete', {id: proveedor.id}) }}" style="display:inline-block" onsubmit="return confirm('¿Eliminar?');">
+        {% if proveedor.activo %}
+          <span class="badge badge-activo">Sí</span>
+        {% else %}
+          <span class="badge badge-inactivo">No</span>
+        {% endif %}
+      </td>
+      <td>{{ proveedor.createdAt|date('d/m/Y H:i') }}</td>
+      <td>{{ proveedor.updatedAt|date('d/m/Y H:i') }}</td>
+      <td class="acciones">
+        <a href="{{ path('proveedor_edit', {id: proveedor.id}) }}">
+          <button class="btn-edit">Editar</button>
+        </a>
+        <form method="post" action="{{ path('proveedor_delete', {id: proveedor.id}) }}" style="display:inline-block" onsubmit="return confirm('¿Eliminar este proveedor?');">
           <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ proveedor.id) }}">
-          <button class="btn btn-sm btn-danger">Eliminar</button>
+          <button class="btn-delete">Eliminar</button>
         </form>
       </td>
     </tr>
   {% else %}
-    <tr><td colspan="6">No hay proveedores registrados.</td></tr>
+    <tr>
+      <td colspan="9" class="sin-proveedores">No hay proveedores registrados.</td>
+    </tr>
   {% endfor %}
   </tbody>
 </table>

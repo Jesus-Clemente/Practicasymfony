@@ -12,7 +12,6 @@ Esta es una aplicación web desarrollada en **Symfony 4** para gestionar proveed
 * Fechas de creación (`createdAt`) y actualización (`updatedAt`) gestionadas automáticamente.
 * Redirección automática desde la raíz (`/`) a `/proveedores/`.
 * Interfaz limpia y moderna usando CSS puro (sin Bootstrap).
-* Preparado para desplegarse con Docker (opcional).
 
 ---
 

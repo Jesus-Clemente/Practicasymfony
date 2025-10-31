@@ -162,7 +162,7 @@ php bin/console make:controller NombreController
 
 * Los estilos están hechos con CSS puro, no se necesita Bootstrap.
 * La redirección desde `/` a `/proveedores/` se gestiona mediante un `DefaultController` o desde `routes.yaml` usando `RedirectController`.
-* La aplicación no ha sido desplegada con Docker, ya que el ordenador donde se desarrolló no cumple con los requisitos necesarios para ejecutarlo.
+* ⚠️La aplicación no ha sido desplegada con Docker, ya que el ordenador donde se desarrolló no cumple con los requisitos necesarios para ejecutarlo.⚠️
 ---
 
 ## Autor
